@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <windows.h>
 #include <unistd.h>
+#include <stdbool.h>
 
 int recebe(int *A, int *B, int max) {
     int i, j;
@@ -21,46 +22,52 @@ int recebe(int *A, int *B, int max) {
 
 int uniao(int *A, int *B, int max) {
     int i, j, cont = 0;
-    
+    bool primeiro = true;
+
     printf("\nUniao: [");
 
     // Imprime todos de A, sem repetição
     for (i = 0; i < max; i++) {
-        int duplicado = 0;
+        bool duplicado = false;
         for (j = 0; j < i; j++) {
             if (A[i] == A[j]) {
-                duplicado = 1;
+                duplicado = true;
                 break;
             }
         }
         if (!duplicado){
+            if (!primeiro) printf(", ");
+            printf("%d", A[i]);
+            primeiro = false;
             cont++;
-            printf("%d, ", A[i]);
         }
     }
 
     // Imprime de B somente os que não estão em A
     for (i = 0; i < max; i++) {
-        int existe = 0;
+        bool existe = false;
         for (j = 0; j < max; j++) {
             if (B[i] == A[j]) {
-                existe = 1;
+                existe = true;
                 break;
             }
         }
         // E evita repetir valores já mostrados de B
         if (!existe) {
             // Também evita duplicados internos de B
-            int duplicado = 0;
+            bool duplicado = false;
             for (j = 0; j < i; j++) {
                 if (B[i] == B[j]) {
-                    duplicado = 1;
+                    duplicado = true;
                     break;
                 }
             }
-            if (!duplicado)
+            if (!duplicado) {
+                if (!primeiro) printf(", ");
+                printf("%d ", B[i]);
+                primeiro = false;
                 cont++;
-                printf("%d, ", B[i]);
+            }
         }
     }
 
@@ -72,6 +79,7 @@ int uniao(int *A, int *B, int max) {
 
 int interseccao(int *A, int *B, int max) {
     int i, j, cont = 0;
+    bool primeiro = true;
 
     printf("\nInterseccao: [");
 
@@ -96,7 +104,9 @@ int interseccao(int *A, int *B, int max) {
             }
 
             if (!duplicado) {
-                printf("%d, ", A[i]);
+                if (!primeiro) printf(", ");
+                printf("%d", A[i]);
+                primeiro = false;
                 cont++;
             }
         }
@@ -109,31 +119,34 @@ int interseccao(int *A, int *B, int max) {
 
 int diferenca(int *A, int *B, int max) {
     int i, j, cont = 0;
+    bool primeiro = true;
 
     printf("\nDiferenca (A - B): [");
 
     for (i = 0; i < max; i++) {
         // Verifica se A[i] existe em B
-        int existe = 0;
+        bool existe = false;
         for (j = 0; j < max; j++) {
             if (A[i] == B[j]) {
-                existe = 1;
+                existe = true;
                 break;
             }
         }
 
         // Se não existe em B, imprime, evitando duplicatas de A
         if (!existe) {
-            int duplicado = 0;
+            bool duplicado = false;
             for (j = 0; j < i; j++) {
                 if (A[i] == A[j]) {
-                    duplicado = 1;
+                    duplicado = true;
                     break;
                 }
             }
 
             if (!duplicado) {
-                printf("%d, ", A[i]);
+                if (!primeiro) printf(", ");
+                printf("%d", A[i]);
+                primeiro = false;
                 cont++;
             }
         }
