@@ -12,6 +12,7 @@ int recebe(int *A, int *B, int max) {
         scanf("%d", &A[i]);
     }
 
+    printf("\n");
     for (j = 0; j < max; j++) {
         printf("Digite o valor %d do vetor B: ", j + 1);
         scanf("%d", &B[j]);
