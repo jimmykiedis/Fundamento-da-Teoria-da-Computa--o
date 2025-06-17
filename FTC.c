@@ -108,20 +108,40 @@ int interseccao(int *A, int *B, int max) {
 }
 
 int diferenca(int *A, int *B, int max) {
-    int i, j;
+    int i, j, cont = 0;
+
+    printf("\nDiferenca (A - B): [");
 
     for (i = 0; i < max; i++) {
-        int found = 0;
+        // Verifica se A[i] existe em B
+        int existe = 0;
         for (j = 0; j < max; j++) {
             if (A[i] == B[j]) {
-                found = 1;
+                existe = 1;
                 break;
             }
         }
-        if (!found) {
-            printf("O valor %d do vetor A nao esta presente no vetor B.\n", A[i]);
+
+        // Se não existe em B, imprime, evitando duplicatas de A
+        if (!existe) {
+            int duplicado = 0;
+            for (j = 0; j < i; j++) {
+                if (A[i] == A[j]) {
+                    duplicado = 1;
+                    break;
+                }
+            }
+
+            if (!duplicado) {
+                printf("%d, ", A[i]);
+                cont++;
+            }
         }
     }
+
+    printf("]\nTotal de elementos na diferenca: %d\n", cont);
+
+    return 0;
 }
 
 int main() {
