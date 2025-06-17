@@ -160,10 +160,10 @@ int main() {
 
     do {
         printf("\nEscolha uma das operacoes:\n");
-        printf("1. Uniao\n");
-        printf("2. Interseccao\n");
-        printf("3. Diferenca\n");
-        printf("0. Sair\n");
+        printf("    1. Uniao\n");
+        printf("    2. Interseccao\n");
+        printf("    3. Diferenca\n");
+        printf("    0. Sair\n");
         printf("Opcao: ");
         scanf("%d", &op);
 
