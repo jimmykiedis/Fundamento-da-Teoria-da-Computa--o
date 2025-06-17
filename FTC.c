@@ -4,7 +4,7 @@
 #include <unistd.h>
 #include <stdbool.h>
 
-int recebe(int *A, int *B, int max) {
+void recebe(int *A, int *B, int max) {
     int i, j;
 
     // vamos preencher os vetores A e B com valores, respectivamente, de max elementos cada
@@ -21,7 +21,7 @@ int recebe(int *A, int *B, int max) {
     }
 }
 
-int uniao(int *A, int *B, int max) {
+void uniao(int *A, int *B, int max) {
     int i, j, cont = 0;     //queremos mostrar a quantidade de elementos na união no fim da operação
     bool primeiro = true;   //preferi tratar as flags com stdbool para melhor legibilidade
 
@@ -74,11 +74,9 @@ int uniao(int *A, int *B, int max) {
 
     printf("]\nTotal de elementos na uniao: %d", cont);
     printf("\n");
-
-    return 0;
 }
 
-int interseccao(int *A, int *B, int max) {
+void interseccao(int *A, int *B, int max) {
     int i, j, cont = 0;
     bool primeiro = true;
 
@@ -114,11 +112,9 @@ int interseccao(int *A, int *B, int max) {
     }
 
     printf("]\nTotal de elementos na interseccao: %d\n", cont);
-
-    return 0;
 }
 
-int diferenca(int *A, int *B, int max) {
+void diferenca(int *A, int *B, int max) {
     int i, j, cont = 0;
     bool primeiro = true;
 
@@ -154,8 +150,6 @@ int diferenca(int *A, int *B, int max) {
     }
 
     printf("]\nTotal de elementos na diferenca: %d\n", cont);
-
-    return 0;
 }
 
 int main() {
