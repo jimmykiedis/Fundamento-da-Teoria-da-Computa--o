@@ -6,6 +6,7 @@
 int recebe(int *A, int *B, int max) {
     int i, j;
 
+    printf("Digite os valores para os vetores A e B, respectivamente:\n");
     for (i = 0; i < max; i++) {
         printf("Digite o valor %d do vetor A: ", i + 1);
         scanf("%d", &A[i]);
