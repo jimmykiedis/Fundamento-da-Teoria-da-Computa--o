@@ -7,6 +7,7 @@
 int recebe(int *A, int *B, int max) {
     int i, j;
 
+    // vamos preencher os vetores A e B com valores, respectivamente, de max elementos cada
     printf("Digite os valores para os vetores A e B, respectivamente:\n");
     for (i = 0; i < max; i++) {
         printf("Digite o valor %d do vetor A: ", i + 1);
@@ -21,12 +22,12 @@ int recebe(int *A, int *B, int max) {
 }
 
 int uniao(int *A, int *B, int max) {
-    int i, j, cont = 0;
-    bool primeiro = true;
+    int i, j, cont = 0;     //queremos mostrar a quantidade de elementos na união no fim da operação
+    bool primeiro = true;   //preferi tratar as flags com stdbool para melhor legibilidade
 
     printf("\nUniao: [");
 
-    // Imprime todos de A, sem repetição
+    //imprimiremos todos de A, sem repetição
     for (i = 0; i < max; i++) {
         bool duplicado = false;
         for (j = 0; j < i; j++) {
@@ -36,14 +37,14 @@ int uniao(int *A, int *B, int max) {
             }
         }
         if (!duplicado){
-            if (!primeiro) printf(", ");
+            if (!primeiro) printf(", "); //vamos colocar a virgula antes de imprimir somente se não for o primeiro elemento
             printf("%d", A[i]);
             primeiro = false;
             cont++;
         }
     }
 
-    // Imprime de B somente os que não estão em A
+    //imprimiremos de B somente os que não estão em A
     for (i = 0; i < max; i++) {
         bool existe = false;
         for (j = 0; j < max; j++) {
@@ -52,9 +53,9 @@ int uniao(int *A, int *B, int max) {
                 break;
             }
         }
-        // E evita repetir valores já mostrados de B
+        //evitando repetir valores já mostrados de B
         if (!existe) {
-            // Também evita duplicados internos de B
+            //também evitando duplicados internos de B
             bool duplicado = false;
             for (j = 0; j < i; j++) {
                 if (B[i] == B[j]) {
@@ -64,7 +65,7 @@ int uniao(int *A, int *B, int max) {
             }
             if (!duplicado) {
                 if (!primeiro) printf(", ");
-                printf("%d ", B[i]);
+                printf("%d", B[i]);
                 primeiro = false;
                 cont++;
             }
@@ -84,21 +85,21 @@ int interseccao(int *A, int *B, int max) {
     printf("\nInterseccao: [");
 
     for (i = 0; i < max; i++) {
-        // Verifica se A[i] existe em B
-        int existe = 0;
+        //verificaremos se A[i] existe em B, se existir, imprimiremos
+        bool existe = false;
         for (j = 0; j < max; j++) {
             if (A[i] == B[j]) {
-                existe = 1;
+                existe = true;
                 break;
             }
         }
 
-        // Evita imprimir duplicados de A
+        //evitaremos imprimir duplicados de A
         if (existe) {
-            int duplicado = 0;
+            bool duplicado = false;
             for (j = 0; j < i; j++) {
                 if (A[i] == A[j]) {
-                    duplicado = 1;
+                    duplicado = true;
                     break;
                 }
             }
@@ -124,7 +125,7 @@ int diferenca(int *A, int *B, int max) {
     printf("\nDiferenca (A - B): [");
 
     for (i = 0; i < max; i++) {
-        // Verifica se A[i] existe em B
+        //verificaremos se A[i] existe em B
         bool existe = false;
         for (j = 0; j < max; j++) {
             if (A[i] == B[j]) {
@@ -133,7 +134,7 @@ int diferenca(int *A, int *B, int max) {
             }
         }
 
-        // Se não existe em B, imprime, evitando duplicatas de A
+        //se não existir em B, imprime, evitando duplicatas de A
         if (!existe) {
             bool duplicado = false;
             for (j = 0; j < i; j++) {
@@ -158,9 +159,10 @@ int diferenca(int *A, int *B, int max) {
 }
 
 int main() {
-    int A[5], B[5], max = 5, op;
+    int max = 5;            //definindo o tamanho máximo dos vetores em um unico lugar para facilitar a manutenção
+    int A[max], B[max], op; //vetores A e B para armazenar os valores, e op para a opção do usuário
 
-    recebe(A, B, max);
+    recebe(A, B, max);      //vamos separar por função cada operação para melhor organização do código
 
     do {
         printf("\nEscolha uma das operacoes:\n");
