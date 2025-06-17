@@ -33,9 +33,10 @@ int uniao(int *A, int *B, int max) {
                 break;
             }
         }
-        if (!duplicado)
+        if (!duplicado){
             cont++;
             printf("%d, ", A[i]);
+        }
     }
 
     // Imprime de B somente os que não estão em A
@@ -70,15 +71,40 @@ int uniao(int *A, int *B, int max) {
 }
 
 int interseccao(int *A, int *B, int max) {
-    int i, j;
+    int i, j, cont = 0;
+
+    printf("\nInterseccao: [");
 
     for (i = 0; i < max; i++) {
+        // Verifica se A[i] existe em B
+        int existe = 0;
         for (j = 0; j < max; j++) {
             if (A[i] == B[j]) {
-                printf("O valor %d do vetor A esta presente no vetor B.\n", A[i]);
+                existe = 1;
+                break;
+            }
+        }
+
+        // Evita imprimir duplicados de A
+        if (existe) {
+            int duplicado = 0;
+            for (j = 0; j < i; j++) {
+                if (A[i] == A[j]) {
+                    duplicado = 1;
+                    break;
+                }
+            }
+
+            if (!duplicado) {
+                printf("%d, ", A[i]);
+                cont++;
             }
         }
     }
+
+    printf("]\nTotal de elementos na interseccao: %d\n", cont);
+
+    return 0;
 }
 
 int diferenca(int *A, int *B, int max) {
