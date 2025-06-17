@@ -20,15 +20,53 @@ int recebe(int *A, int *B, int max) {
 }
 
 int uniao(int *A, int *B, int max) {
-    int i, j;
+    int i, j, cont = 0;
+    
+    printf("\nUniao: [");
 
+    // Imprime todos de A, sem repetição
     for (i = 0; i < max; i++) {
-        for (j = 0; j < max; j++) {
-            if (A[i] == B[j]) {
-                printf("O valor %d do vetor A esta presente no vetor B.\n", A[i]);
+        int duplicado = 0;
+        for (j = 0; j < i; j++) {
+            if (A[i] == A[j]) {
+                duplicado = 1;
+                break;
             }
         }
+        if (!duplicado)
+            cont++;
+            printf("%d, ", A[i]);
     }
+
+    // Imprime de B somente os que não estão em A
+    for (i = 0; i < max; i++) {
+        int existe = 0;
+        for (j = 0; j < max; j++) {
+            if (B[i] == A[j]) {
+                existe = 1;
+                break;
+            }
+        }
+        // E evita repetir valores já mostrados de B
+        if (!existe) {
+            // Também evita duplicados internos de B
+            int duplicado = 0;
+            for (j = 0; j < i; j++) {
+                if (B[i] == B[j]) {
+                    duplicado = 1;
+                    break;
+                }
+            }
+            if (!duplicado)
+                cont++;
+                printf("%d, ", B[i]);
+        }
+    }
+
+    printf("]\nTotal de elementos na uniao: %d", cont);
+    printf("\n");
+
+    return 0;
 }
 
 int interseccao(int *A, int *B, int max) {
@@ -85,16 +123,16 @@ int main() {
                 diferenca(A, B, max);
                 break;
             case 0:
-                printf("Saindo...\n");
+                printf("\nSaindo...\n");
                 sleep(3);
                 break;
             default:
-                printf("Opcao invalida!\n");
+                printf("\nOpcao invalida!\n");
         }
 
         if (op != 0) {
-            printf("Operacao concluida.\n");
-            printf("Pressione Enter para continuar...\n");
+            printf("\nOperacao concluida.\n");
+            printf("\nPressione Enter para continuar...\n");
             while (getchar() != '\n'); // Limpa o buffer
             getchar(); // Espera Enter
         }
