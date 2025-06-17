@@ -15,6 +15,7 @@ evitando duplicatas e exibindo a contagem total de elementos envolvidos.
 📦 Arquivos:
 ------------
 - FTC.c        → Código-fonte principal
+- FTC.o        → Arquivo objeto (gerado na compilação)
 - output/      → Pasta de saída com o executável (FTC.exe)
 - README.txt   → Este arquivo
 
