@@ -58,42 +58,46 @@ int diferenca(int *A, int *B, int max) {
     }
 }
 
-int main () {
-    int A[5], B[5], max = 5, op = NULL;
+int main() {
+    int A[5], B[5], max = 5, op;
 
     recebe(A, B, max);
 
-    printf("Escolha uma das operacoes:\n");
-    printf("1. Uniao\n");
-    printf("2. Interseccao\n");
-    printf("3. Diferenca\n");
-    printf("0. Sair\n");
-    scanf("%d", &op);
+    do {
+        printf("\nEscolha uma das operacoes:\n");
+        printf("1. Uniao\n");
+        printf("2. Interseccao\n");
+        printf("3. Diferenca\n");
+        printf("0. Sair\n");
+        printf("Opcao: ");
+        scanf("%d", &op);
 
-    while (op) {
-        switch (op)
-        {
-        case 1:
-            uniao(A, B, max);
-            break;
-        case 2:
-            interseccao(A, B, max);
-            break;
-        case 3:
-            diferenca(A, B, max);
-            break;
-        case 0:
-            printf("Saindo...\n");
-            sleep(3);
-            exit(0);
-            break;
-        default:
-            break;
+        switch (op) {
+            case 1:
+                uniao(A, B, max);
+                break;
+            case 2:
+                interseccao(A, B, max);
+                break;
+            case 3:
+                diferenca(A, B, max);
+                break;
+            case 0:
+                printf("Saindo...\n");
+                sleep(3);
+                break;
+            default:
+                printf("Opcao invalida!\n");
         }
-        printf("Operacao concluida.\n");
-        printf("Pressione qualquer tecla para sair.\n");
-        getchar();
-    }
+
+        if (op != 0) {
+            printf("Operacao concluida.\n");
+            printf("Pressione Enter para continuar...\n");
+            while (getchar() != '\n'); // Limpa o buffer
+            getchar(); // Espera Enter
+        }
+
+    } while (op != 0);
 
     return 0;
 }
