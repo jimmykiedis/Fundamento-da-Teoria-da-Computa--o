@@ -17,7 +17,6 @@ void limparTela() {
         system("clear");
     #endif
 }
-
 //tive que separa a função recebe em 2, pq tava ficando muito cheio de gambiarra
 void recebeConjuntos(int *A, int *B, int elementosA, int elementosB) {
     printf("Digite os valores para os vetores A e B, respectivamente:\n");
@@ -67,9 +66,9 @@ void ereflexivo(int *A, int *B, int pares) {
     }
 
     if (reflexivo) {
-        printf("\nA relacao e reflexiva.\n");
+        printf("\nReflexivo = Verdadeiro.\n");
     } else {
-        printf("\nA relacao nao e reflexiva.\n");
+        printf("\nReflexivo = Falso.\n");
     }
 }
 
@@ -91,9 +90,9 @@ void esimetrico(int *A, int *B, int pares) {
     }
 
     if (simetrico) {
-        printf("\nA relacao e simetrica.\n");
+        printf("\nSimetrica = Verdadeiro.\n");
     } else {
-        printf("\nA relacao nao e simetrica.\n");
+        printf("\nSimetrica = Falso.\n");
     }
 }
 
