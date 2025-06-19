@@ -47,6 +47,68 @@ void recebePares(int *A, int *B, int pares) {
     }
 }
 
+void ereflexivo(int *A, int *B, int pares) {
+    bool reflexivo = true;
+
+    for (int i = 0; i < pares; i++) {
+        if (A[i] != B[i]) {
+            reflexivo = false;
+            break;
+        }
+    }
+
+    if (reflexivo) {
+        printf("\nA relacao e reflexiva.\n");
+    } else {
+        printf("\nA relacao nao e reflexiva.\n");
+    }
+}
+
+void esimetrico(int *A, int *B, int pares) {
+    bool simetrico = true;
+
+    for (int i = 0; i < pares; i++) {
+        bool encontrado = false;
+        for (int j = 0; j < pares; j++) {
+            if (A[i] == B[j] && B[i] == A[j]) {
+                encontrado = true;
+                break;
+            }
+        }
+        if (!encontrado) {
+            simetrico = false;
+            break;
+        }
+    }
+
+    if (simetrico) {
+        printf("\nA relacao e simetrica.\n");
+    } else {
+        printf("\nA relacao nao e simetrica.\n");
+    }
+}
+
+void etransitivo(int *A, int *B, int pares) {
+    bool transitiva = true;
+
+    for (int i = 0; i < pares; i++) {
+        for (int j = 0; j < pares; j++) {
+            if (A[i] == B[j]) {
+                bool encontrado = false;
+                for (int k = 0; k < pares; k++) {
+                    if (B[i] == A[k] && A[j] == B[k]) {
+                        encontrado = true;
+                        break;
+                    }
+                }
+                if (!encontrado) {
+                    transitiva = false;
+                    break;
+                }
+            }
+        }
+    }
+}
 
 void uniao(int *A, int *B, int max) {
     int cont = 0;
