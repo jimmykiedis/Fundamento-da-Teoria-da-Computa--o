@@ -89,8 +89,6 @@ void esimetrico(int *A, int *B, int pares) {
 }
 
 void etransitivo(int *A, int *B, int pares) {
-    bool transitiva = true;
-
     for (int i = 0; i < pares; i++) {
         for (int j = 0; j < pares; j++) {
             if (A[i] == B[j]) {
@@ -102,12 +100,13 @@ void etransitivo(int *A, int *B, int pares) {
                     }
                 }
                 if (!encontrado) {
-                    transitiva = false;
-                    break;
+                    printf("\nA relacao nao e transitiva.\n");
+                    return;
                 }
             }
         }
     }
+    printf("\nA relacao e transitiva.\n");
 }
 
 void uniao(int *A, int *B, int max) {
@@ -301,6 +300,11 @@ void propriedadesRelacionais(int *A, int *B) {
     while ((c = getchar()) != '\n' && c != EOF);
 
     recebePares(A, B, pares);
+
+    printf("\nVerificando propriedades relacionais...\n");
+    ereflexivo(A, B, pares);
+    esimetrico(A, B, pares);
+    etransitivo(A, B, pares);
 
 }
 
