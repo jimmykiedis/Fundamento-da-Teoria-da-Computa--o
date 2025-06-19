@@ -209,9 +209,17 @@ void conjuntacao(int *A, int *B) {
 }
 
 void propriedadesRelacionais(int *A, int *B) {
-    (void)A;
-    (void)B;
-    printf("\nFuncao de propriedades relacionais ainda nao implementada.\n");
+    int pares;
+
+    limparTela();
+
+    printf("Bem-vindo ao programa de propriedades Relacionais!\n"); 
+    printf("Este programa permite verificar se seu produto cartesiano é Reflexivo, Simétrico e Transitivo\n");
+    printf("Os parece do produto cartesiano serao representados por dois vetores de inteiros, você decide o tamanho (no maximo de %d elementos).\n", MAX);
+    printf("Vamos comecar!\n");
+
+    printf("Quantos pares ordenados deseja inserir (maximo %d)? ", MAX);
+    scanf("%d", &pares);
 }
 
 int main() {
