@@ -1,63 +1,71 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <windows.h>
-#include <unistd.h>
 #include <stdbool.h>
 
-void recebe(int *A, int *B, int max) {
-    int i, j;
+#ifdef _WIN32
+    #include <windows.h>
+#else
+    #include <unistd.h>
+#endif
 
-    // vamos preencher os vetores A e B com valores, respectivamente, de max elementos cada
+#define MAX 20
+
+void limparTela() {
+    #ifdef _WIN32
+        system("cls");
+    #else
+        system("clear");
+    #endif
+}
+
+void recebe(int *A, int *B, int elementosA, int elementosB) {
     printf("Digite os valores para os vetores A e B, respectivamente:\n");
-    for (i = 0; i < max; i++) {
+
+    for (int i = 0; i < elementosA; i++) {
         printf("Digite o valor %d do vetor A: ", i + 1);
         scanf("%d", &A[i]);
     }
 
     printf("\n");
-    for (j = 0; j < max; j++) {
-        printf("Digite o valor %d do vetor B: ", j + 1);
-        scanf("%d", &B[j]);
+    for (int i = 0; i < elementosB; i++) {
+        printf("Digite o valor %d do vetor B: ", i + 1);
+        scanf("%d", &B[i]);
     }
 }
 
 void uniao(int *A, int *B, int max) {
-    int i, j, cont = 0;     //queremos mostrar a quantidade de elementos na união no fim da operação
-    bool primeiro = true;   //preferi tratar as flags com stdbool para melhor legibilidade
+    int cont = 0;
+    bool primeiro = true;
 
     printf("\nUniao: [");
 
-    //imprimiremos todos de A, sem repetição
-    for (i = 0; i < max; i++) {
+    for (int i = 0; i < max; i++) {
         bool duplicado = false;
-        for (j = 0; j < i; j++) {
+        for (int j = 0; j < i; j++) {
             if (A[i] == A[j]) {
                 duplicado = true;
                 break;
             }
         }
-        if (!duplicado){
-            if (!primeiro) printf(", "); //vamos colocar a virgula antes de imprimir somente se não for o primeiro elemento
+        if (!duplicado) {
+            if (!primeiro) printf(", ");
             printf("%d", A[i]);
             primeiro = false;
             cont++;
         }
     }
 
-    //imprimiremos de B somente os que não estão em A
-    for (i = 0; i < max; i++) {
+    for (int i = 0; i < max; i++) {
         bool existe = false;
-        for (j = 0; j < max; j++) {
+        for (int j = 0; j < max; j++) {
             if (B[i] == A[j]) {
                 existe = true;
                 break;
             }
         }
-        //evitando repetir valores já mostrados de B
         if (!existe) {
-            //também evitando duplicados internos de B
             bool duplicado = false;
-            for (j = 0; j < i; j++) {
+            for (int j = 0; j < i; j++) {
                 if (B[i] == B[j]) {
                     duplicado = true;
                     break;
@@ -72,36 +80,31 @@ void uniao(int *A, int *B, int max) {
         }
     }
 
-    printf("]\nTotal de elementos na uniao: %d", cont);
-    printf("\n");
+    printf("]\nTotal de elementos na uniao: %d\n", cont);
 }
 
 void interseccao(int *A, int *B, int max) {
-    int i, j, cont = 0;
+    int cont = 0;
     bool primeiro = true;
 
     printf("\nInterseccao: [");
 
-    for (i = 0; i < max; i++) {
-        //verificaremos se A[i] existe em B, se existir, imprimiremos
+    for (int i = 0; i < max; i++) {
         bool existe = false;
-        for (j = 0; j < max; j++) {
+        for (int j = 0; j < max; j++) {
             if (A[i] == B[j]) {
                 existe = true;
                 break;
             }
         }
-
-        //evitaremos imprimir duplicados de A
         if (existe) {
             bool duplicado = false;
-            for (j = 0; j < i; j++) {
+            for (int j = 0; j < i; j++) {
                 if (A[i] == A[j]) {
                     duplicado = true;
                     break;
                 }
             }
-
             if (!duplicado) {
                 if (!primeiro) printf(", ");
                 printf("%d", A[i]);
@@ -115,31 +118,27 @@ void interseccao(int *A, int *B, int max) {
 }
 
 void diferenca(int *A, int *B, int max) {
-    int i, j, cont = 0;
+    int cont = 0;
     bool primeiro = true;
 
     printf("\nDiferenca (A - B): [");
 
-    for (i = 0; i < max; i++) {
-        //verificaremos se A[i] existe em B
+    for (int i = 0; i < max; i++) {
         bool existe = false;
-        for (j = 0; j < max; j++) {
+        for (int j = 0; j < max; j++) {
             if (A[i] == B[j]) {
                 existe = true;
                 break;
             }
         }
-
-        //se não existir em B, imprime, evitando duplicatas de A
         if (!existe) {
             bool duplicado = false;
-            for (j = 0; j < i; j++) {
+            for (int j = 0; j < i; j++) {
                 if (A[i] == A[j]) {
                     duplicado = true;
                     break;
                 }
             }
-
             if (!duplicado) {
                 if (!primeiro) printf(", ");
                 printf("%d", A[i]);
@@ -152,34 +151,49 @@ void diferenca(int *A, int *B, int max) {
     printf("]\nTotal de elementos na diferenca: %d\n", cont);
 }
 
-int main() {
-    int max = 5;            //definindo o tamanho máximo dos vetores em um unico lugar para facilitar a manutenção
-    int A[max], B[max], op; //vetores A e B para armazenar os valores, e op para a opção do usuário
+void conjuntacao(int *A, int *B) {
+    int elementosA, elementosB, op;
 
-    recebe(A, B, max);      //vamos separar por função cada operação para melhor organização do código
+    limparTela();
+
+    printf("Bem-vindo ao programa de Conjuntacao!\n"); 
+    printf("Este programa permite realizar operacoes de uniao, interseccao e diferenca entre dois conjuntos.\n");
+    printf("Os conjuntos serao representados por dois vetores de inteiros, cada um com tamanho maximo de %d elementos.\n", MAX);
+    printf("Vamos comecar!\n");
+
+    printf("Quantos elementos deseja inserir no conjunto A (maximo %d)? ", MAX);
+    scanf("%d", &elementosA);
+    printf("Quantos elementos deseja inserir no conjunto B (maximo %d)? ", MAX);
+    scanf("%d", &elementosB);
+
+    recebe(A, B, elementosA, elementosB);
 
     do {
         printf("\nEscolha uma das operacoes:\n");
         printf("    1. Uniao\n");
         printf("    2. Interseccao\n");
         printf("    3. Diferenca\n");
-        printf("    0. Sair\n");
+        printf("    0. Voltar ao menu principal\n");
         printf("Opcao: ");
+
         scanf("%d", &op);
+        int c;
+        while ((c = getchar()) != '\n' && c != EOF);
+
 
         switch (op) {
             case 1:
-                uniao(A, B, max);
+                uniao(A, B, MAX);
                 break;
             case 2:
-                interseccao(A, B, max);
+                interseccao(A, B, MAX);
                 break;
             case 3:
-                diferenca(A, B, max);
+                diferenca(A, B, MAX);
                 break;
             case 0:
-                printf("\nSaindo...\n");
-                sleep(3);
+                limparTela();
+                printf("\nVoltando ao menu principal...\n");
                 break;
             default:
                 printf("\nOpcao invalida!\n");
@@ -188,12 +202,63 @@ int main() {
         if (op != 0) {
             printf("\nOperacao concluida.\n");
             printf("\nPressione Enter para continuar...\n");
-            while (getchar() != '\n'); // Limpa o buffer
-            getchar(); // Espera Enter
+            while (getchar() != '\n');
+        }
+
+    } while (op != 0);
+}
+
+void propriedadesRelacionais(int *A, int *B) {
+    (void)A;
+    (void)B;
+    printf("\nFuncao de propriedades relacionais ainda nao implementada.\n");
+}
+
+int main() {
+    limparTela();
+
+    int A[MAX], B[MAX], op;
+
+    printf("==*== Bem-vindo ao trabalho 2 de Fundamentos de Tecnologia da Computacao! ==*==\n");
+
+    do {
+        printf("\nO que deseja fazer primeiro?\n");
+        printf("1. Conjuntacao\n");
+        printf("2. Propriedades Relacionais\n");
+        printf("0. Sair\n");
+        printf("Escolha uma opcao: ");
+
+        scanf("%d", &op);
+        int c;
+        while ((c = getchar()) != '\n' && c != EOF);
+
+
+        switch (op) {
+            case 1:
+                conjuntacao(A, B);
+                break;
+            case 2:
+                propriedadesRelacionais(A, B);
+                break;
+            case 0:
+                limparTela();
+                printf("\nSaindo...\n");
+                #ifdef _WIN32
+                    Sleep(3000);
+                #else
+                    sleep(3);
+                #endif
+                break;
+            default:
+                printf("\nOpcao invalida!\n");
+        }
+
+        if (op != 0) {
+            printf("\nPressione Enter para continuar...\n");
+            while (getchar() != '\n');
         }
 
     } while (op != 0);
 
     return 0;
 }
-
