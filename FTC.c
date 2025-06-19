@@ -18,7 +18,8 @@ void limparTela() {
     #endif
 }
 
-void recebe(int *A, int *B, int elementosA, int elementosB) {
+//tive que separa a função recebe em 2, pq tava ficando muito cheio de gambiarra
+void recebeConjuntos(int *A, int *B, int elementosA, int elementosB) {
     printf("Digite os valores para os vetores A e B, respectivamente:\n");
 
     for (int i = 0; i < elementosA; i++) {
@@ -27,11 +28,25 @@ void recebe(int *A, int *B, int elementosA, int elementosB) {
     }
 
     printf("\n");
+
     for (int i = 0; i < elementosB; i++) {
         printf("Digite o valor %d do vetor B: ", i + 1);
         scanf("%d", &B[i]);
     }
 }
+
+void recebePares(int *A, int *B, int pares) {
+    printf("Digite os %d pares (A e B):\n", pares);
+
+    for (int i = 0; i < pares; i++) {
+        printf("Par %d - A: ", i + 1);
+        scanf("%d", &A[i]);
+
+        printf("Par %d - B: ", i + 1);
+        scanf("%d", &B[i]);
+    }
+}
+
 
 void uniao(int *A, int *B, int max) {
     int cont = 0;
@@ -166,7 +181,7 @@ void conjuntacao(int *A, int *B) {
     printf("Quantos elementos deseja inserir no conjunto B (maximo %d)? ", MAX);
     scanf("%d", &elementosB);
 
-    recebe(A, B, elementosA, elementosB);
+    recebeConjuntos(A, B, elementosA, elementosB);
 
     do {
         printf("\nEscolha uma das operacoes:\n");
@@ -215,11 +230,16 @@ void propriedadesRelacionais(int *A, int *B) {
 
     printf("Bem-vindo ao programa de propriedades Relacionais!\n"); 
     printf("Este programa permite verificar se seu produto cartesiano é Reflexivo, Simétrico e Transitivo\n");
-    printf("Os parece do produto cartesiano serao representados por dois vetores de inteiros, você decide o tamanho (no maximo de %d elementos).\n", MAX);
+    printf("Os pares do produto cartesiano serao representados por dois vetores de inteiros, você decide o tamanho (no maximo de %d elementos).\n", MAX);
     printf("Vamos comecar!\n");
 
     printf("Quantos pares ordenados deseja inserir (maximo %d)? ", MAX);
     scanf("%d", &pares);
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF);
+
+    recebePares(A, B, pares);
+
 }
 
 int main() {
