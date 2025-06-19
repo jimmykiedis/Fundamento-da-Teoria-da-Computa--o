@@ -44,7 +44,16 @@ void recebePares(int *A, int *B, int pares) {
 
         printf("Par %d - B: ", i + 1);
         scanf("%d", &B[i]);
+
+        printf("Par %d lido: (%d, %d)\n", i + 1, A[i], B[i]);
     }
+
+    // Limpa o buffer do scanf pra evitar conflito com o getchar
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF);
+
+    printf("\nPressione Enter para verificar as propriedades relacionais...");
+    getchar();
 }
 
 void ereflexivo(int *A, int *B, int pares) {
@@ -301,13 +310,6 @@ void propriedadesRelacionais(int *A, int *B) {
 
     recebePares(A, B, pares);
 
-    for (int i = 0; i < pares; i++) {
-        for (int j = 0; j < pares; j++) {
-            printf("[%d] = (%d, %d) \n", i, A[i], B[j]);
-        }
-    }
-
-    printf("\nVerificando propriedades relacionais...\n");
     ereflexivo(A, B, pares);
     esimetrico(A, B, pares);
     etransitivo(A, B, pares);
@@ -336,9 +338,13 @@ int main() {
         switch (op) {
             case 1:
                 conjuntacao(A, B);
+                while (getchar() != '\n');
+                limparTela();
                 break;
             case 2:
                 propriedadesRelacionais(A, B);
+                while (getchar() != '\n');
+                limparTela();
                 break;
             case 0:
                 limparTela();
