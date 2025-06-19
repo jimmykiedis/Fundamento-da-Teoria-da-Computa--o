@@ -301,6 +301,12 @@ void propriedadesRelacionais(int *A, int *B) {
 
     recebePares(A, B, pares);
 
+    for (int i = 0; i < pares; i++) {
+        for (int j = 0; j < pares; j++) {
+            printf("[%d] = (%d, %d) \n", i, A[i], B[j]);
+        }
+    }
+
     printf("\nVerificando propriedades relacionais...\n");
     ereflexivo(A, B, pares);
     esimetrico(A, B, pares);
